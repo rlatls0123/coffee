@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop | Bean & Brew</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/style.css}"> </head>
+<body>
+
+<div class="vintage-overlay"></div>
+
+<header>
+  <div class="logo">Bean & Brew</div>
+  <nav>
+    <a th:href="@{/shop}">원두 쇼핑</a>
+    <a href="#">커피 MBTI</a>
+    <a href="#">브랜드 스토리</a>
+    <a href="#">매장 안내</a>
+  </nav>
+  <div class="auth-buttons">
+    <a href="#" class="btn-login">로그인</a>
+    <a href="#" class="btn-signup">회원가입</a>
+  </div>
+</header>
+
+<main class="shop-container">
+  <section class="shop-header">
+    <h2>Our Menu</h2>
+    <p>엄선된 재료로 준비한 Bean & Brew의 시그니처 메뉴입니다.</p>
+  </section>
+
+  <div class="category-tabs">
+    <a th:href="@{/shop}"
+       th:classappend="${currentCategory == null} ? 'active' : ''"
+       class="tab-btn">All</a>
+
+    <a th:href="@{/shop(category='Coffee')}"
+       th:classappend="${currentCategory == 'Coffee'} ? 'active' : ''"
+       class="tab-btn">Coffee</a>
+
+    <a th:href="@{/shop(category='Dessert')}"
+       th:classappend="${currentCategory == 'Dessert'} ? 'active' : ''"
+       class="tab-btn">Dessert</a>
+
+    <a th:href="@{/shop(category='Tea')}"
+       th:classappend="${currentCategory == 'Tea'} ? 'active' : ''"
+       class="tab-btn">Tea</a>
+  </div>
+
+  <div class="menu-grid">
+    <div class="menu-card" th:each="menu : ${menus}">
+<!--      <div class="menu-image"-->
+<!--           th:style="'background-image: url(' + @{${menu.imageUrl}} + ');'">-->
+<!--      </div>-->
+
+      <div class="menu-info">
+        <h3 th:text="${menu.name}">menu Name</h3>
+
+        <p class="price" th:text="'₩ ' + ${#numbers.formatInteger(menu.price, 3, 'COMMA')}">₩ 0</p>
+
+        <span style="font-size: 11px; opacity: 0.6;" th:text="${menu.category}">Category</span>
+
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(menus)}  " style="grid-column: 1/-1; text-align: center; padding: 50px;">
+      <p>현재 등록된 상품이 없습니다.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 BEAN & BREW VINTAGE COFFEE. ALL RIGHTS RESERVED.
+</footer>
+
+</body>
+</html>

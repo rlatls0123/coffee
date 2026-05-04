@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: coffee1
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/khs_coffee?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: ghdtls0418!m
+
+  jpa:
+    hibernate:
+      ddl-auto: update # 개발 단계에서는 update, 운영에서는 validate/none 권장
+#    show-sql: true     // 콘솔에 실행되는 SQL 출력
+    properties:
+      hibernate:
+        format_sql: true # SQL을 보기 좋게 정렬

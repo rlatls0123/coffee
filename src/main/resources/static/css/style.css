@@ -1,0 +1,459 @@
+/* style.css */
+
+:root {
+    --bg-color: #FDF5E6; 
+    --point-color: #B87333; 
+    --text-color: #3D2B1F; 
+    --white: #ffffff;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nanum+Myeongjo', serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    scroll-behavior: smooth;
+}
+
+/* 헤더 전체 폰트와 톤을 로고 스타일로 통일 */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    border-bottom: 1px solid rgba(61, 43, 31, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background-color: rgba(253, 245, 230, 0.95);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+/* 로고 스타일 */
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+/* 네비게이션 메뉴도 로고와 같은 폰트로 통일 */
+nav a {
+    font-family: 'Playfair Display', serif;
+    text-decoration: none;
+    color: var(--text-color);
+    margin: 0 20px;
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+/* 로그인 & 회원가입 버튼을 로고 스타일로 재해석 */
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.auth-buttons a {
+    font-family: 'Playfair Display', serif; /* 로고와 동일 폰트 */
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px; /* 로고의 자간 느낌 적용 */
+    padding: 8px 20px;
+    transition: 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* 로그인 버튼: 로고처럼 깔끔한 텍스트 형태 */
+.auth-buttons .btn-login {
+    color: var(--text-color);
+    border: 1px solid transparent; /* 정렬을 위해 투명 테두리 유지 */
+}
+
+.auth-buttons .btn-login:hover {
+    font-style: italic; /* 로고의 우아한 느낌을 위해 이탈릭 효과 */
+    opacity: 0.7;
+}
+
+/* 회원가입 버튼: 로고 스타일에 얇은 테두리만 추가 */
+.auth-buttons .btn-signup {
+    color: var(--text-color);
+    border: 1px solid var(--text-color); /* 로고 선 굵기와 맞춘 1px 테두리 */
+}
+
+.auth-buttons .btn-signup:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+/* 히어로 섹션 - 이미지 변경 및 가독성 처리 */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* 어두운 오버레이(0.5)를 추가하여 글자 가독성 확보 */
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&q=80&w=2000') no-repeat center center/cover;
+    color: var(--white);
+}
+
+.hero-content {
+    z-index: 10;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    margin-bottom: 20px;
+    font-style: italic;
+    /* 약간의 그림자로 글자를 더 띄움 */
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero p {
+    font-size: 22px;
+    margin-bottom: 40px;
+    max-width: 700px;
+    line-height: 1.6;
+}
+
+.promo-text {
+    font-size: 14px !important;
+    margin-top: 20px;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* 버튼 스타일 */
+.cta-group .btn {
+    padding: 15px 40px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin: 0 10px;
+    border: 2px solid var(--white);
+    transition: 0.3s;
+}
+
+.btn-shop {
+    background-color: var(--white);
+    color: var(--text-color);
+}
+
+.btn-quiz {
+    background-color: transparent;
+    color: var(--white);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    background-color: var(--point-color);
+    border-color: var(--point-color);
+    color: var(--white);
+}
+
+/* 나머지 섹션 생략 (기존 스타일 유지 가능) */
+.features {
+    padding: 100px 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.feature-item {
+    border: 1px solid rgba(61, 43, 31, 0.1);
+    padding: 40px 20px;
+}
+
+.vintage-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+footer {
+    padding: 50px;
+    text-align: center;
+    border-top: 1px solid rgba(61, 43, 31, 0.1);
+}
+------------------------------
+
+/* 쇼핑 페이지 레이아웃 */
+.shop-container {
+    padding: 150px 50px 100px; /* 헤더 높이만큼 여백 */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.shop-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.shop-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-style: italic;
+    color: var(--text-color);
+}
+
+/* 카테고리 탭 스타일 */
+.category-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 60px;
+    border-bottom: 1px solid rgba(61, 43, 31, 0.1);
+    padding-bottom: 10px;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px 15px;
+    transition: 0.3s;
+    opacity: 0.5;
+}
+
+.tab-btn.active, .tab-btn:hover {
+    opacity: 1;
+    font-weight: bold;
+    border-bottom: 2px solid var(--text-color);
+}
+
+/* 상품 그리드 및 카드 */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+}
+
+.product-card {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(61, 43, 31, 0.1);
+    transition: 0.4s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.product-image {
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid rgba(61, 43, 31, 0.1);
+}
+
+.product-info {
+    padding: 25px;
+    text-align: center;
+}
+
+.product-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.product-info .price {
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: bold;
+    color: var(--point-color);
+    margin-bottom: 20px;
+}
+
+/* 상품 버튼 스타일 (로고/헤더 버튼 스타일 계승) */
+.add-to-cart {
+    font-family: 'Playfair Display', serif;
+    background: none;
+    border: 1px solid var(--text-color);
+    padding: 10px 25px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+-------------------------
+.category-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 60px;
+    border-bottom: 1px solid rgba(61, 43, 31, 0.1);
+    padding-bottom: 10px;
+}
+
+.tab-btn {
+    text-decoration: none; /* 밑줄 제거 */
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--text-color);
+    padding: 5px 15px;
+    transition: 0.3s;
+    opacity: 0.5;
+    border-bottom: 2px solid transparent; /* 기본 상태 테두리 */
+}
+
+.tab-btn.active {
+    opacity: 1;
+    font-weight: bold;
+    border-bottom: 2px solid var(--text-color); /* 활성화된 카테고리 표시 */
+}
+
+.tab-btn:hover {
+    opacity: 0.8;
+}
+-----------------------------
+/* 로그인/회원가입 페이지 전용 레이아웃 */
+.auth-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.auth-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 20px 60px;
+}
+
+.auth-card {
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(61, 43, 31, 0.1);
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 450px;
+    backdrop-filter: blur(5px);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.auth-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.auth-header p {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* 폼 스타일 */
+.auth-form .input-group {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form label {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(61, 43, 31, 0.3);
+    padding: 10px 5px;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.auth-form input:focus {
+    border-bottom: 1px solid var(--text-color);
+}
+
+/* 옵션 영역 */
+.auth-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 30px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.remember-me input {
+    margin-right: 8px;
+    accent-color: var(--text-color);
+}
+
+.find-pw {
+    text-decoration: none;
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+/* 로그인 제출 버튼 (헤더 버튼 스타일 계승) */
+.btn-auth-submit {
+    width: 100%;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border: 1px solid var(--text-color);
+    padding: 15px;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-auth-submit:hover {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.auth-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.auth-footer a {
+    color: var(--point-color);
+    font-weight: bold;
+    text-decoration: none;
+}
