@@ -12,17 +12,8 @@
 <div class="vintage-overlay"></div>
 
 <header>
-    <div class="logo">Bean & Brew</div>
-    <nav>
-        <a href="#">원두 쇼핑</a>
-        <a href="#">커피 MBTI</a>
-        <a href="#">브랜드 스토리</a>
-        <a href="#">매장 안내</a>
-    </nav>
-    <div class="auth-buttons">
-        <a href="/login" class="btn-login">로그인</a>
-        <a href="#" class="btn-signup">회원가입</a>
-    </div>
+    <div th:replace="~{fragments/header :: commonHeader}"></div>
+
 </header>
 
 <section class="hero">

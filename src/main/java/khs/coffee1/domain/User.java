@@ -19,6 +19,8 @@ public class User {
     private String name;
     private String loginId;
     private String password;
+    private String phone;
+
 
     @OneToMany(mappedBy = "user")
     private final List<Order> orders = new ArrayList<>();

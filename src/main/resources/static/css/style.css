@@ -24,7 +24,8 @@ header {
     padding: 20px 50px;
     border-bottom: 1px solid rgba(61, 43, 31, 0.1);
     position: fixed;
-    width: 100%;
+    left: 0;
+    right: 0;
     top: 0;
     background-color: rgba(253, 245, 230, 0.95);
     z-index: 1000;
@@ -238,10 +239,39 @@ footer {
 }
 
 /* 상품 그리드 및 카드 */
+/* 4열 배열로 변경된 상품 그리드 */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 40px;
+    /* 기본적으로 PC 화면에서는 가로로 동일한 비율의 4개 열(column)을 생성 */
+    grid-template-columns: repeat(4, 1fr);
+    /* 상품 카드 사이의 간격 (상하 좌우 모두 30px) */
+    gap: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 태블릿 화면 (화면 너비가 1024px 이하일 때) - 2개씩 보이게 */
+@media (max-width: 1024px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+/* 모바일 화면 (화면 너비가 600px 이하일 때) - 1개씩 세로로 정렬 */
+@media (max-width: 600px) {
+    .product-grid {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+    }
+}
+
+/* 4열에 맞춰 상품 카드 내부 이미지 높이 미세 조정 (선택사항) */
+.product-image {
+    height: 260px; /* 4열이 되면 가로가 좁아지므로 세로도 살짝 줄여서 황금비율 유지 */
+    background-size: cover;
+    background-position: center;
+    border-bottom: 1px solid rgba(61, 43, 31, 0.1);
 }
 
 .product-card {
@@ -456,4 +486,17 @@ footer {
     color: var(--point-color);
     font-weight: bold;
     text-decoration: none;
+}
+
+/* 회원가입 화면 입력창 간격 미세 조정 */
+.auth-form .input-group {
+    margin-bottom: 20px; /* 로그인보다 살짝 좁혀서 전체 밸런스 유지 */
+}
+
+/* 폼 내부의 체크박스 텍스트 폰트 스타일 */
+.remember-me span {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 13px;
+    color: var(--text-color);
+    opacity: 0.8;
 }

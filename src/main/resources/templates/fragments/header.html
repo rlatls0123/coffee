@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="commonHeader">
+  <a th:href="@{/}" class="logo">Bean & Brew</a>
+  <nav>
+    <a th:href="@{/shop}">원두 쇼핑</a>
+    <a href="#">커피 MBTI</a>
+    <a href="#">브랜드 스토리</a>
+    <a href="#">매장 안내</a>
+  </nav>
+  <div class="auth-buttons">
+    <div th:if="${session.loginUser == null}">
+      <a th:href="@{/login}" class="btn-login">로그인</a>
+      <a th:href="@{/signup}" class="btn-signup">회원가입</a>
+    </div>
+    <div th:if="${session.loginUser != null}">
+      <span class="welcome-msg" th:text="${session.loginUser.name} + '님, 환영합니다.'"></span>
+      <a th:href="@{/logout}" class="btn-login">로그아웃</a>
+    </div>
+  </div>
+</header>
+</html>
