@@ -16,10 +16,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String username;
     private String loginId;
     private String password;
     private String phone;
+    private UserRole role;
 
 
     @OneToMany(mappedBy = "user")
