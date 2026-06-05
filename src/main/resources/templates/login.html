@@ -25,15 +25,15 @@
       <p>당신의 향기로운 일상이 다시 시작됩니다.</p>
     </div>
 
-    <form th:action="@{/login}" method="post" class="auth-form">
+    <form th:action="@{/login}" th:object="${dto}" method="post" class="auth-form">
       <div class="input-group">
-        <label for="username">Email Address</label>
-        <input type="email" id="username" name="username" required placeholder="example@coffee.com">
+        <label for="loginId">Email Address</label>
+        <input type="email" th:field="*{loginId}" id="loginId" name="loginId" required placeholder="example@coffee.com">
       </div>
 
       <div class="input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required placeholder="••••••••">
+        <input type="password" th:field="*{password}" id="password" name="password" required placeholder="••••••••">
       </div>
 
       <div class="auth-options">

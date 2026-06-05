@@ -1,27 +1,42 @@
-//package khs.coffee1.config;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-//@Configuration
-//@EnableWebSecurity
-//public class SecurityConfig {
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.disable()) // 테스트를 위해 CSRF 잠시 해제
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/", "/api/v1/cafe/menus").permitAll() // 메뉴판은 누구나
-//                        .requestMatchers("/admin/**").hasRole("ADMIN")        // 관리자만 접속 가능
-//                        .anyRequest().authenticated()                         // 나머지는 로그인 필수
-//                )
-//                .formLogin(form -> form.defaultSuccessUrl("/api/v1/cafe/menus")); // 로그인 성공 시 이동
+package khs.coffee1.config;
 //
-//        return http.build();
-//    }
-//}
-
+//import khs.coffee1.jwt.JWTFilter;
+//import khs.coffee1.jwt.JWTUtil;
+//import khs.coffee1.jwt.LoginFilter;
+//import lombok.RequiredArgsConstructor;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.http.SessionCreationPolicy;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.web.SecurityFilterChain;
+//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+//import org.springframework.web.cors.CorsConfiguration;
+//import org.springframework.web.cors.CorsConfigurationSource;
+//
+//import java.util.Collections;
+////
+////@Configuration
+////@EnableWebSecurity
+////public class SecurityConfig {
+////    @Bean
+////    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+////        http
+////                .csrf(csrf -> csrf.disable()) // 테스트를 위해 CSRF 잠시 해제
+////                .authorizeHttpRequests(auth -> auth
+////                        .requestMatchers("/", "/api/v1/cafe/menus").permitAll() // 메뉴판은 누구나
+////                        .requestMatchers("/admin/**").hasRole("ADMIN")        // 관리자만 접속 가능
+////                        .anyRequest().authenticated()                         // 나머지는 로그인 필수
+////                )
+////                .formLogin(form -> form.defaultSuccessUrl("/api/v1/cafe/menus")); // 로그인 성공 시 이동
+////
+////        return http.build();
+////    }
+////}
+//
 //@Configuration
 //@EnableWebSecurity
 //@RequiredArgsConstructor
@@ -96,3 +111,45 @@ import org.springframework.context.annotation.Configuration;
 //        return http.build();
 //    }
 //}
+import khs.coffee1.jwt.CustomUserDetailsService;
+import khs.coffee1.jwt.JwtAuthenticationFilter;
+import khs.coffee1.jwt.JwtTokenProvider;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+@Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+    private final JwtTokenProvider jwtTokenProvider;
+    private final CustomUserDetailsService userDetailsService;
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers( "/","/css/**", "/js/**", "/signup","/login").permitAll() // 인증 제외 경로
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
+                        UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+}
