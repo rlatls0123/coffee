@@ -25,27 +25,39 @@
       <p>Bean & Brew의 멤버가 되어 특별한 혜택을 누려보세요.</p>
     </div>
 
-    <form th:action="@{/signup}" th:object="${dto}" method="post" class="auth-form">
+    <form th:action="@{/signup}" th:object="${dto}" method="post" class="auth-form" onsubmit="return checkSubmit()">
 
       <div class="input-group">
         <label for="username">Full Name</label>
         <input type="text" th:field="*{username}" id="username" name="username" required placeholder="홍길동">
+        <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-red-500 text-xs mt-1"></p>
+
       </div>
 
       <div class="input-group">
         <label for="loginId">Email Address (ID)</label>
         <input type="email" th:field="*{loginId}" id="loginId" name="loginId" required placeholder="example@coffee.com">
+        <!-- 중복확인 전용 버튼 (타입을 'button'으로 두고 자바스크립트로 전송 제어) -->
+        <button type="button" class="btn-id-check" onclick="submitIdCheck()">중복확인</button>
         <span th:if="${param.error}" th:text="${param.error}" class="error-msg" style="color: #B87333; font-size: 12px; margin-top: 5px;"></span>
+        <!-- 서버에서 보낸 결과 메시지 출력 -->
+        <span id="idCheckMessage" class="error-msg" th:text="${message}" th:style="'color: ' + ${msgColor} + '; font-size: 12px; margin-top: 5px; display: block;'"></span>
+        <p th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}" class="text-red-500 text-xs mt-1"></p>
+
       </div>
 
       <div class="input-group">
         <label for="password">Password</label>
         <input type="password" th:field="*{password}" id="password" name="password" required placeholder="8자 이상의 비밀번호">
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-500 text-xs mt-1"></p>
+
       </div>
 
       <div class="input-group">
         <label for="phone">Phone Number</label>
-        <input type="tel" th:field="*{phone}" id="phone" name="phone" placeholder="010-1234-5678">
+        <input type="tel" th:field="*{phone}" id="phone" name="phone" required placeholder="010-1234-5678">
+        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-red-500 text-xs mt-1"></p>
+
       </div>
 
       <input type="hidden" name="role" value="ROLE_USER">
@@ -56,8 +68,67 @@
         </label>
       </div>
 
-      <button type="submit" class="btn-auth-submit">Register</button>
+      <button type="submit" name="action" value="register" class="btn-auth-submit">Register</button>
     </form>
+
+
+    <script th:inline="javascript">
+      // 서버에서 넘겨준 중복 체크 통과 여부 (기본값 false)
+      let isIdChecked = [[${isIdChecked != null ? isIdChecked : false}]];
+
+      // 페이지 로드 시 이미 성공적으로 확인된 상태라면 입력창을 잠그고 최종 확정 안내를 띄움
+      window.onload = function() {
+          if (isIdChecked) {
+              const loginIdInput = document.getElementById("loginId");
+              if(confirm("사용 가능한 아이디입니다.\n이 아이디를 사용하시겠습니까? (확정 후 수정 불가)")) {
+                  loginIdInput.readOnly = true;
+              } else {
+                  resetIdCheck();
+                  document.getElementById("idCheckMessage").innerText = "아이디 확정이 취소되었습니다.";
+                  document.getElementById("idCheckMessage").style.color = "#B87333";
+              }
+          }
+      }
+
+      // 아이디 창에 타이핑을 다시 하면 중복체크 상태 리셋
+      function resetIdCheck() {
+          isIdChecked = false;
+          document.getElementById("loginId").readOnly = false;
+          const message = document.getElementById("idCheckMessage");
+          message.innerText = "아이디가 변경되었습니다. 다시 중복확인을 해주세요.";
+          message.style.color = "#B87333";
+      }
+
+      // 중복확인 버튼 클릭 시 동작
+      function submitIdCheck() {
+          const loginId = document.getElementById("loginId").value;
+          if (!loginId || !loginId.includes('@')) {
+              alert("올바른 이메일 형식의 아이디를 입력해주세요.");
+              return;
+          }
+
+          // 폼의 전송 목적지를 임시로 바꾸거나 파라미터를 추가하여 현재 폼을 그대로 제출
+          const form = document.querySelector(".auth-form");
+
+          // 중복확인용 임시 submit 버튼을 만들어 붙여서 보냄 (서버에서 'action=check'로 구별하도록)
+          const hiddenInput = document.createElement("input");
+          hiddenInput.setAttribute("type", "hidden");
+          hiddenInput.setAttribute("name", "action");
+          hiddenInput.setAttribute("value", "check");
+          form.appendChild(hiddenInput);
+
+          form.submit();
+      }
+
+      // 최종 회원가입 버튼 클릭 시 검증
+      function checkSubmit() {
+          if (!isIdChecked) {
+              alert("아이디 중복확인 및 사용 확정이 필요합니다.");
+              return false;
+          }
+          return true;
+      }
+    </script>
 
     <div class="auth-footer">
       <p>이미 계정이 있으신가요? <a th:href="@{/login}">로그인 하기</a></p>

@@ -26,14 +26,20 @@
     </div>
 
     <form th:action="@{/login}" th:object="${dto}" method="post" class="auth-form">
+      <div th:if="${#fields.hasGlobalErrors()}" class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">
+        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+      </div>
+
       <div class="input-group">
         <label for="loginId">Email Address</label>
         <input type="email" th:field="*{loginId}" id="loginId" name="loginId" required placeholder="example@coffee.com">
+        <p th:if="${#fields.hasErrors('loginId')}" th:errors="*{loginId}" class="text-red-500 text-xs mt-1"></p>
       </div>
 
       <div class="input-group">
         <label for="password">Password</label>
         <input type="password" th:field="*{password}" id="password" name="password" required placeholder="••••••••">
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-500 text-xs mt-1"></p>
       </div>
 
       <div class="auth-options">
